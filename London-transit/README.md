@@ -1,10 +1,35 @@
-# London Underground Ridership Analysis (SQL)
+# London Underground Ridership Analysis (SQL + Tableau)
 
 Exploratory SQL analysis of when, where, and why people ride the London Underground on a typical weekday.
 
-- **Tools:** SQL (aggregation, multi-column `GROUP BY`, `WHERE` filtering, `ORDER BY`)
+- **Tools:** SQL (aggregation, multi-column `GROUP BY`, `WHERE` filtering, `ORDER BY`); Tableau Public (calculated fields, table calculations, Top N filter)
 - **Context:** Case study completed in the Global Career Accelerator, summer 2026
 - **Data:** Transport for London (TfL) Rolling Origin and Destination Survey (RODS), used as a training dataset
+
+---
+
+## Interactive dashboard
+
+[![London Underground ridership dashboard](dashboard.png)](https://public.tableau.com/app/profile/nicholas.zettler/vizzes)
+
+**[View the live dashboard on Tableau Public →](https://public.tableau.com/app/profile/nicholas.zettler/vizzes)**
+
+Built in Tableau Public from the same 6,295-row RODS extract used in the SQL analysis below.
+
+| View | What it shows | Tableau technique |
+|---|---|---|
+| KPI row | 4.88M daily journeys · 44.7% are commutes · 51.7% start in Zone 1 · PM Peak is busiest | Calculated fields, Top N filter |
+| Zone × time heatmap | Each zone's day as % of its own journeys | Percent-of-total table calculation |
+| Purpose by time | Commute vs. tourist vs. other trips across the day | `Journey Type` calculated field (IF/ELSEIF) |
+| Trip length by zone | Distance mix for each entry zone | 100% stacked bars (table calculation) |
+| Tourist timing | When tourist trips happen | Dimension filter |
+
+### What the dashboard adds beyond the SQL
+
+- **Zone 1 and the outer zones peak at opposite times.** Zone 1 entries peak in the PM (33.9% of its journeys vs. 17.1% in the AM). Zones 3–5 peak in the AM (about 40%) and fall to about 17% in the PM: people leave home from the outer zones in the morning and leave work in Zone 1 in the evening.
+- **Commuters dominate the AM peak.** 77.5% of AM Peak journeys are Home↔Work commutes, against 22.5% at midday.
+- **Tourists fill the gap between peaks.** 61.9% of tourist journeys happen at midday.
+- **Early trips are mostly unlabeled.** 96.9% of Early journeys have an unknown purpose, a data-quality limit worth noting.
 
 ---
 
@@ -103,5 +128,5 @@ Concentrate service frequency into Zone 1 during the AM and PM commute windows, 
 
 - Figures come from a modeled typical weekday in November, so they may not hold for other seasons or days.
 - Distances are grouped into bands, which limits fine-grained trip-length analysis.
-- Some trips have unknown or unspecified purposes.
 - Descriptive analysis only: it shows association, not cause, and no forecasting was done.
+- 16.1% of journeys have an unknown purpose, concentrated in the Early period, so purpose-based findings for early morning are unreliable.
